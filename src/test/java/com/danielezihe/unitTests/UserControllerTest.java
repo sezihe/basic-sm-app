@@ -64,4 +64,26 @@ public class UserControllerTest {
         // assert that the password was not left the same
         Assertions.assertNotEquals(password, justSavedUser.getPassword());
     }
+
+    @Test
+    @DisplayName("testsLoginMethod")
+    void testsLoginMethod() {
+        UserController newUser = new UserController("Daniel", "sezihe@gmail.com", "This!sAStrongPassword!");
+        newUser.save();
+
+        // correct details
+        var response = UserController.login("sezihe@gmail.com", "This!sAStrongPassword!");
+
+        Assertions.assertTrue(response instanceof User);
+
+        // invalid email
+        var response1 = UserController.login("esouzo61@gmail.com", "This!sAStrongPassword!");
+
+        Assertions.assertEquals("INVALID USER", response1);
+
+        // invalid password
+        var response2 = UserController.login("sezihe@gmail.com", "WrongPassword");
+
+        Assertions.assertEquals("INCORRECT DETAILS", response2);
+    }
 }

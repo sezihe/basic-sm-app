@@ -15,6 +15,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 /**
  * @author EZIHE S. DANIEL
  * CreatedAt: 25/09/2021
@@ -57,8 +59,29 @@ public class CommentControllerTest {
         PostController.addComment(johnsPost, newlyAddedComment);
         logger.info("COMMENT: " + newlyAddedComment);
 
-        Assertions.assertEquals(newComment.getComment(), newlyAddedComment.getComment());
+        Assertions.assertEquals(newComment.comment(), newlyAddedComment.getComment());
     }
+
+    @Test
+    @DisplayName("testsGetAllCommentsMethod")
+    void testsGetAllCommentsMethod() {
+        User newUser = createAUser("Daniel", "esouzo61@gmail.com");
+
+        Post johnsPost = createAPost();
+
+        CommentController newComment = new CommentController(johnsPost, newUser, "Ha, Hello!");
+        Comment comment = newComment.save();
+        PostController.addComment(johnsPost, comment);
+
+        CommentController newComment1 = new CommentController(johnsPost, newUser, "HEY!");
+        Comment comment1 = newComment1.save();
+        PostController.addComment(johnsPost, comment1);
+
+        List<Comment> comments = CommentController.getAllCommentsFromASetOfIDs(johnsPost.getComments());
+
+        Assertions.assertEquals(2, comments.size());
+    }
+
 
     // UTILITIES
     private User createAUser(String name, String email) {

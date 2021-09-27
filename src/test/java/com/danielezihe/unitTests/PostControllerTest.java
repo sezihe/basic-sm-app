@@ -16,6 +16,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 /**
  * @author EZIHE S. DANIEL
  * CreatedAt: 25/09/2021
@@ -52,6 +54,35 @@ public class PostControllerTest {
 
         assert justAddedPost != null;
         Assertions.assertEquals(newPost.getPost(), justAddedPost.getPost());
+    }
+
+    @Test
+    @DisplayName("testsFindPostByIDMethod")
+    void testsFindPostByIdMethod() {
+        User aUser = createAUser();
+
+        PostController newPost = new PostController(aUser, "Hello Everyone");
+        Post post = newPost.save();
+
+        Post dbPost = PostController.findPostById(post.getId());
+
+        Assertions.assertEquals(post.getId(), dbPost.getId());
+    }
+
+    @Test
+    @DisplayName("testsGetAllPostsMethod")
+    void testsGetAllPostsMethod() {
+        User aUser = createAUser();
+
+        new PostController(aUser, "Hello Everyone").save();
+
+        new PostController(aUser, "Hi Everyone").save();
+
+        new PostController(aUser, "Hey Everyone").save();
+
+        List<Post> posts = PostController.getAllPosts();
+
+        Assertions.assertEquals(3, posts.size());
     }
 
     // UTILITIES
