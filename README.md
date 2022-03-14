@@ -1,7 +1,6 @@
 # Basic Social Media App
-### [Encentral Solutions](https://www.encentralsolutions.com/) Intern Assessment
 
-A basic Social Media App that is managed with Maven and Built with Java.
+A basic Social Media API.
 
 ## Technologies Used
 - Maven (Project Management)
